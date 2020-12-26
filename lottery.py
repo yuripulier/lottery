@@ -115,7 +115,37 @@ class Lottery:
     return pd.DataFrame(qnt_balls, columns = ['Balls', 'Occurrence'])
 
   #----------------------------------------------#
-  def even_odd(self):
+  def odd_even(self):
+    # criando o vetor zerado para obter quantidade de bolas pares e impares em cada sorteio
+    od_ev = []
+    for i in range(len(sort)):
+      od_ev.append([0, 0]) # [quantidade par , quantidade impar]
+
+    # preenchendo o vetor com as ocorrencias de pares e impares
+    for i in range(len(sort)):
+      for j in range(1,16):
+        if (sort[i][j] % 2 == 0):  # par
+          od_ev[i][0] = od_ev[i][0] + 1
+        else:   # impar
+          od_ev[i][1] = od_ev[i][1] + 1
+    
+    # precisamos agora calcular a quantidade de ocorrencias para cada par de [par, impar]
+    qnt_ocur = []    # quantidade de ocorrencias
+    for i in range(16):
+      qnt_ocur.append([[15-i, i], 0]) # [quantidade par , quantidade impar, quantidade de ocorrencias]
+
+    for i in range(len(par_impar)):
+      for j in range(16):
+        if (par_impar[i] == [15-j, j]):
+          qnt_ocur[j][1] = qnt_ocur[j][1] + 1
+
+    # ordenando o array pela quantidade de ocorrencias
+    qnt_ocur = sorted(qnt_ocur, key=itemgetter(1), reverse= True)
+    df_ocur_odd_even = pd.DataFrame(qnt_ocur, columns=['Even, Odd', 'Occurrence'])
+    return df_ocur_odd_even
+
+  #----------------------------------------------#
+  def prime_number(self):
     # Novo DataFrame para armazenar as informações dos números primos em todos os sorteios
     qnt_prime = pd.DataFrame(columns=['Contest', 'Quantity Primes'])
     tot = 0
