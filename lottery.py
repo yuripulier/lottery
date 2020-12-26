@@ -18,10 +18,8 @@ class Lottery:
     self.results = pd.DataFrame(results.dropna(axis=0, how='all'), dtype=np.dtype("int32"))
 
   def __repr__(self):
-      return '<{}: {}>\n'.format(self.__class__.__name__, self.results)
-    
-  def data(self):
-    return self.results
+      return self.results
+  
   #----------------------------------------------#
   def __partitions(self, V, p, r):
     pivotvalue = V[p]
