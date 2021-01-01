@@ -117,38 +117,40 @@ class Lottery:
     return pd.DataFrame(qnt_balls, columns = ['Balls', 'Occurrence'])
 
   #----------------------------------------------#
-  def even_odd(self):
+  def odd(self, details):
     # criando o vetor zerado para obter quantidade de bolas pares e impares em cada sorteio
-    ev_od = []
+    od = []
     S = np.array(self.results)
     for i in range(len(S)):
-      ev_od.append([0, 0]) # [quantidade par , quantidade impar]
+      od.append([0, 0]) # [concurso, quantidade impar]
 
     # preenchendo o vetor com as ocorrencias de pares e impares
     for i in range(len(S)):
+      od[i][0] = i
       for j in range(1,16):
-        if (S[i][j] % 2 == 0):  # par
-          ev_od[i][0] = ev_od[i][0] + 1
-        else:   # impar
-          ev_od[i][1] = ev_od[i][1] + 1
+        if (S[i][j] % 2 != 0):  # impar
+          od[i][1] = od[i][1] + 1
     
-    # precisamos agora calcular a quantidade de ocorrencias para cada par de [par, impar]
+    if (details == True):
+      return pd.DataFrame(od, columns=['Contest', 'Odd'])
+
+    # precisamos agora calcular a quantidade de ocorrencias para cada impar
     qnt_ocur = []    # quantidade de ocorrencias
     for i in range(16):
-      qnt_ocur.append([[15-i, i], 0]) # [quantidade par , quantidade impar, quantidade de ocorrencias]
+      qnt_ocur.append([i, 0]) # [quantidade impar, quantidade de ocorrencias]
 
-    for i in range(len(ev_od)):
+    for i in range(len(od)):
       for j in range(16):
-        if (ev_od[i] == [15-j, j]):
+        if (od[i][1] == j):
           qnt_ocur[j][1] = qnt_ocur[j][1] + 1
 
     # ordenando o array pela quantidade de ocorrencias
     qnt_ocur = sorted(qnt_ocur, key=itemgetter(1), reverse= True)
-    df_ocur_even_odd = pd.DataFrame(qnt_ocur, columns=['Even, Odd', 'Occurrence'])
-    return df_ocur_even_odd
+    df_ocur_odd = pd.DataFrame(qnt_ocur, columns=['Odd', 'Occurrence'])
+    return df_ocur_odd
 
   #----------------------------------------------#
-  def prime_number(self):
+  def prime_number(self, details):
     # Novo DataFrame para armazenar as informações dos números primos em todos os sorteios
     qnt_prime = pd.DataFrame(columns=['Contest', 'Quantity Primes'])
     tot = 0
@@ -159,6 +161,10 @@ class Lottery:
           tot = tot + 1
       qnt_prime = qnt_prime.append({'Contest': i+1,  'Quantity Primes': tot}, ignore_index=True)
       tot = 0
+
+    if (details == True):
+      return qnt_prime
+
     # DataFrame com a quantidade de ocorrencia em relação a quantidade de números primos nos sorteios já realizados
     df_ocur_primes = pd.DataFrame({'Quantity Primes': [1,2,3,4,5,6,7,8,9], 
                                     'Occurrence': [0,0,0,0,0,0,0,0,0],
@@ -193,7 +199,7 @@ class Lottery:
     return df_ocur_primes
 
   #----------------------------------------------#
-  def mult_of_three(self):
+  def mult_of_three(self, details):
     # Novo DataFrame para armazenar as informações dos números multiplos de 3 em todos os sorteios
     qnt_mult = pd.DataFrame(columns=['Contest', 'Multiples of 3'])
     tot = 0
@@ -204,6 +210,10 @@ class Lottery:
           tot = tot + 1
       qnt_mult = qnt_mult.append({'Contest': i+1,  'Multiples of 3': tot}, ignore_index=True)
       tot = 0
+
+    if (details == True):
+      return qnt_mult
+
     # DataFrame com a quantidade de ocorrencia em relação a quantidade de números multiplos de 3 nos sorteios já realizados
     df_ocur_mult = pd.DataFrame({'Multiples of 3': [1,2,3,4,5,6,7,8],
                                     'Occurrence': [0,0,0,0,0,0,0,0],
@@ -236,7 +246,7 @@ class Lottery:
     return df_ocur_mult
   #----------------------------------------------#
 
-  def fibonacci(self):
+  def fibonacci(self, details):
     # Novo DataFrame para armazenar as informações dos números de fibonacci em todos os sorteios
     qnt_fibo = pd.DataFrame(columns=['Contest', 'Fibonacci Number'])
     tot = 0
@@ -247,6 +257,10 @@ class Lottery:
           tot = tot + 1
       qnt_fibo = qnt_fibo.append({'Contest': i+1,  'Fibonacci Number': tot}, ignore_index=True)
       tot = 0
+
+    if (details == True):
+      return qnt_fibo
+
     # DataFrame com a quantidade de ocorrencia em relação a quantidade de números multiplos de 3 nos sorteios já realizados
     df_ocur_fibo = pd.DataFrame({'Fibonacci Number': [1,2,3,4,5,6,7], 
                                     'Occurrence': [0,0,0,0,0,0,0],
@@ -277,7 +291,7 @@ class Lottery:
     return df_ocur_fibo
 
   #----------------------------------------------#
-  def repeated_dozens(self):
+  def repeated_dozens(self, details):
     self.sort()
     # Novo DataFrame para armazenar as informações dos números repetidos em relação ao sorteio anterior
     qnt_rept = pd.DataFrame(columns=['Contest', 'Repeated Dozens'])
@@ -288,6 +302,10 @@ class Lottery:
         tot = tot + self.__binary_search(self.results.iloc[i,1:], 0, len(self.results.iloc[i,1:])-1, self.results.iloc[i-1,j])
       qnt_rept = qnt_rept.append({'Contest': i+1,  'Repeated Dozens': tot}, ignore_index=True)
       tot = 0
+
+    if (details == True):
+      return qnt_rept
+
     # DataFrame com a quantidade de ocorrencia em relação a quantidade de números multiplos de 3 nos sorteios já realizados
     df_ocur_rept = pd.DataFrame({'Repeated Dozens': [5,6,7,8,9,10,11,12,13,14,15], 
                                     'Occurrence': [0,0,0,0,0,0,0,0,0,0,0],
