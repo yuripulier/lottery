@@ -152,50 +152,50 @@ class Lottery:
   #----------------------------------------------#
   def prime_number(self, details):
     # Novo DataFrame para armazenar as informações dos números primos em todos os sorteios
-    qnt_prime = pd.DataFrame(columns=['Contest', 'Quantity Primes'])
+    qnt_prime = pd.DataFrame(columns=['Contest', 'Primes'])
     tot = 0
     # Inserindo no DataFrame as quantidades de numeros primos por sorteio
     for i in range(len(self.results)):
       for j in range(1,16):
         if (self.__is_prime(self.results.iloc[i][j])):
           tot = tot + 1
-      qnt_prime = qnt_prime.append({'Contest': i+1,  'Quantity Primes': tot}, ignore_index=True)
+      qnt_prime = qnt_prime.append({'Contest': i+1,  'Primes': tot}, ignore_index=True)
       tot = 0
 
     if (details == True):
       return qnt_prime
 
     # DataFrame com a quantidade de ocorrencia em relação a quantidade de números primos nos sorteios já realizados
-    df_ocur_primes = pd.DataFrame({'Quantity Primes': [1,2,3,4,5,6,7,8,9], 
+    df_ocur_primes = pd.DataFrame({'Primes': [1,2,3,4,5,6,7,8,9], 
                                     'Occurrence': [0,0,0,0,0,0,0,0,0],
                                     'Percentage Occurrences': [0,0,0,0,0,0,0,0,0]}, dtype=np.dtype("int32"))
     # Preenchendo o numero de ocorrencias 
     for i in range(len(qnt_prime)):
       if (qnt_prime.iloc[i][1] == 1):
-        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Quantity Primes'] != 1, other=df_ocur_primes.iloc[0][1] + 1)
+        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Primes'] != 1, other=df_ocur_primes.iloc[0][1] + 1)
       elif (qnt_prime.iloc[i][1] == 2):
-        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Quantity Primes'] != 2, other=df_ocur_primes.iloc[1][1] + 1)
+        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Primes'] != 2, other=df_ocur_primes.iloc[1][1] + 1)
       elif (qnt_prime.iloc[i][1] == 3):
-        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Quantity Primes'] != 3, other=df_ocur_primes.iloc[2][1] + 1)
+        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Primes'] != 3, other=df_ocur_primes.iloc[2][1] + 1)
       elif (qnt_prime.iloc[i][1] == 4):
-        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Quantity Primes'] != 4, other=df_ocur_primes.iloc[3][1] + 1)
+        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Primes'] != 4, other=df_ocur_primes.iloc[3][1] + 1)
       elif (qnt_prime.iloc[i][1] == 5):
-        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Quantity Primes'] != 5, other=df_ocur_primes.iloc[4][1] + 1)
+        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Primes'] != 5, other=df_ocur_primes.iloc[4][1] + 1)
       elif (qnt_prime.iloc[i][1] == 6):
-        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Quantity Primes'] != 6, other=df_ocur_primes.iloc[5][1] + 1)
+        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Primes'] != 6, other=df_ocur_primes.iloc[5][1] + 1)
       elif (qnt_prime.iloc[i][1] == 7):
-        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Quantity Primes'] != 7, other=df_ocur_primes.iloc[6][1] + 1)
+        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Primes'] != 7, other=df_ocur_primes.iloc[6][1] + 1)
       elif (qnt_prime.iloc[i][1] == 8):
-        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Quantity Primes'] != 8, other=df_ocur_primes.iloc[7][1] + 1)
+        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Primes'] != 8, other=df_ocur_primes.iloc[7][1] + 1)
       elif (qnt_prime.iloc[i][1] == 9):
-        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Quantity Primes'] != 9, other=df_ocur_primes.iloc[8][1] + 1)
+        df_ocur_primes['Occurrence'] = df_ocur_primes['Occurrence'].where(cond=df_ocur_primes['Primes'] != 9, other=df_ocur_primes.iloc[8][1] + 1)
     # Soma as ocorrencias
     tot = 0
     for i in range(len(df_ocur_primes)):
       tot = tot + df_ocur_primes.iloc[i][1]
     # Preenchendo a percentagem do numero de ocorrencias
     for i in range(len(df_ocur_primes)):
-      df_ocur_primes['Percentage Occurrences'] = df_ocur_primes['Percentage Occurrences'].where(cond=df_ocur_primes['Quantity Primes'] != i+1, other=(df_ocur_primes.iloc[i][1] * 100) / tot)  
+      df_ocur_primes['Percentage Occurrences'] = df_ocur_primes['Percentage Occurrences'].where(cond=df_ocur_primes['Primes'] != i+1, other=(df_ocur_primes.iloc[i][1] * 100) / tot)  
     return df_ocur_primes
 
   #----------------------------------------------#
@@ -248,98 +248,98 @@ class Lottery:
 
   def fibonacci(self, details):
     # Novo DataFrame para armazenar as informações dos números de fibonacci em todos os sorteios
-    qnt_fibo = pd.DataFrame(columns=['Contest', 'Fibonacci Number'])
+    qnt_fibo = pd.DataFrame(columns=['Contest', 'Fibonacci'])
     tot = 0
     # Inserindo no DataFrame as quantidades dos números de fibonacci em todos os sorteios
     for i in range(len(self.results)):
       for j in range(1,16):
         if (self.__is_fibo(self.results.iloc[i][j])):
           tot = tot + 1
-      qnt_fibo = qnt_fibo.append({'Contest': i+1,  'Fibonacci Number': tot}, ignore_index=True)
+      qnt_fibo = qnt_fibo.append({'Contest': i+1,  'Fibonacci': tot}, ignore_index=True)
       tot = 0
 
     if (details == True):
       return qnt_fibo
 
     # DataFrame com a quantidade de ocorrencia em relação a quantidade de números multiplos de 3 nos sorteios já realizados
-    df_ocur_fibo = pd.DataFrame({'Fibonacci Number': [1,2,3,4,5,6,7], 
+    df_ocur_fibo = pd.DataFrame({'Fibonacci': [1,2,3,4,5,6,7], 
                                     'Occurrence': [0,0,0,0,0,0,0],
                                     'Percentage Occurrences': [0,0,0,0,0,0,0]}, dtype=np.dtype("int32"))
     # Preenchendo o numero de ocorrencias
     for i in range(len(qnt_fibo)):
       if (qnt_fibo.iloc[i][1] == 1):
-        df_ocur_fibo['Occurrence'] = df_ocur_fibo['Occurrence'].where(cond=df_ocur_fibo['Fibonacci Number'] != 1, other=df_ocur_fibo.iloc[0][1] + 1)
+        df_ocur_fibo['Occurrence'] = df_ocur_fibo['Occurrence'].where(cond=df_ocur_fibo['Fibonacci'] != 1, other=df_ocur_fibo.iloc[0][1] + 1)
       elif (qnt_fibo.iloc[i][1] == 2):
-        df_ocur_fibo['Occurrence'] = df_ocur_fibo['Occurrence'].where(cond=df_ocur_fibo['Fibonacci Number'] != 2, other=df_ocur_fibo.iloc[1][1] + 1)
+        df_ocur_fibo['Occurrence'] = df_ocur_fibo['Occurrence'].where(cond=df_ocur_fibo['Fibonacci'] != 2, other=df_ocur_fibo.iloc[1][1] + 1)
       elif (qnt_fibo.iloc[i][1] == 3):
-        df_ocur_fibo['Occurrence'] = df_ocur_fibo['Occurrence'].where(cond=df_ocur_fibo['Fibonacci Number'] != 3, other=df_ocur_fibo.iloc[2][1] + 1)
+        df_ocur_fibo['Occurrence'] = df_ocur_fibo['Occurrence'].where(cond=df_ocur_fibo['Fibonacci'] != 3, other=df_ocur_fibo.iloc[2][1] + 1)
       elif (qnt_fibo.iloc[i][1] == 4):
-        df_ocur_fibo['Occurrence'] = df_ocur_fibo['Occurrence'].where(cond=df_ocur_fibo['Fibonacci Number'] != 4, other=df_ocur_fibo.iloc[3][1] + 1)
+        df_ocur_fibo['Occurrence'] = df_ocur_fibo['Occurrence'].where(cond=df_ocur_fibo['Fibonacci'] != 4, other=df_ocur_fibo.iloc[3][1] + 1)
       elif (qnt_fibo.iloc[i][1] == 5):
-        df_ocur_fibo['Occurrence'] = df_ocur_fibo['Occurrence'].where(cond=df_ocur_fibo['Fibonacci Number'] != 5, other=df_ocur_fibo.iloc[4][1] + 1)
+        df_ocur_fibo['Occurrence'] = df_ocur_fibo['Occurrence'].where(cond=df_ocur_fibo['Fibonacci'] != 5, other=df_ocur_fibo.iloc[4][1] + 1)
       elif (qnt_fibo.iloc[i][1] == 6):
-        df_ocur_fibo['Occurrence'] = df_ocur_fibo['Occurrence'].where(cond=df_ocur_fibo['Fibonacci Number'] != 6, other=df_ocur_fibo.iloc[5][1] + 1)
+        df_ocur_fibo['Occurrence'] = df_ocur_fibo['Occurrence'].where(cond=df_ocur_fibo['Fibonacci'] != 6, other=df_ocur_fibo.iloc[5][1] + 1)
       elif (qnt_fibo.iloc[i][1] == 7):
-        df_ocur_fibo['Occurrence'] = df_ocur_fibo['Occurrence'].where(cond=df_ocur_fibo['Fibonacci Number'] != 7, other=df_ocur_fibo.iloc[6][1] + 1)
+        df_ocur_fibo['Occurrence'] = df_ocur_fibo['Occurrence'].where(cond=df_ocur_fibo['Fibonacci'] != 7, other=df_ocur_fibo.iloc[6][1] + 1)
     # Soma as ocorrencias
     tot = 0
     for i in range(len(df_ocur_fibo)):
       tot = tot + df_ocur_fibo.iloc[i][1]
     # Preenchendo a percentagem do numero de ocorrencias
     for i in range(len(df_ocur_fibo)):
-      df_ocur_fibo['Percentage Occurrences'] = df_ocur_fibo['Percentage Occurrences'].where(cond=df_ocur_fibo['Fibonacci Number'] != i+1, other=(df_ocur_fibo.iloc[i][1] * 100) / tot)
+      df_ocur_fibo['Percentage Occurrences'] = df_ocur_fibo['Percentage Occurrences'].where(cond=df_ocur_fibo['Fibonacci'] != i+1, other=(df_ocur_fibo.iloc[i][1] * 100) / tot)
     return df_ocur_fibo
 
   #----------------------------------------------#
   def repeated_dozens(self, details):
     self.sort()
     # Novo DataFrame para armazenar as informações dos números repetidos em relação ao sorteio anterior
-    qnt_rept = pd.DataFrame(columns=['Contest', 'Repeated Dozens'])
+    qnt_rept = pd.DataFrame(columns=['Contest', 'Repeated'])
     tot = 0
     # Inserindo no DataFrame as quantidades dos números repetidos em relação ao sorteio anterior
     for i in range(1, len(self.results)):
       for j in range(1,16):
         tot = tot + self.__binary_search(self.results.iloc[i,1:], 0, len(self.results.iloc[i,1:])-1, self.results.iloc[i-1,j])
-      qnt_rept = qnt_rept.append({'Contest': i+1,  'Repeated Dozens': tot}, ignore_index=True)
+      qnt_rept = qnt_rept.append({'Contest': i+1,  'Repeated': tot}, ignore_index=True)
       tot = 0
 
     if (details == True):
       return qnt_rept
 
     # DataFrame com a quantidade de ocorrencia em relação a quantidade de números multiplos de 3 nos sorteios já realizados
-    df_ocur_rept = pd.DataFrame({'Repeated Dozens': [5,6,7,8,9,10,11,12,13,14,15], 
+    df_ocur_rept = pd.DataFrame({'Repeated': [5,6,7,8,9,10,11,12,13,14,15], 
                                     'Occurrence': [0,0,0,0,0,0,0,0,0,0,0],
                                     'Percentage Occurrences': [0,0,0,0,0,0,0,0,0,0,0]}, dtype=np.dtype("int32"))
     # Preenchendo o numero de ocorrencias
     for i in range(len(qnt_rept)):
       if (qnt_rept.iloc[i][1] == 5):
-        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated Dozens'] != 5, other=df_ocur_rept.iloc[0][1] + 1)
+        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated'] != 5, other=df_ocur_rept.iloc[0][1] + 1)
       elif (qnt_rept.iloc[i][1] == 6):
-        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated Dozens'] != 6, other=df_ocur_rept.iloc[1][1] + 1)
+        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated'] != 6, other=df_ocur_rept.iloc[1][1] + 1)
       elif (qnt_rept.iloc[i][1] == 7):
-        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated Dozens'] != 7, other=df_ocur_rept.iloc[2][1] + 1)
+        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated'] != 7, other=df_ocur_rept.iloc[2][1] + 1)
       elif (qnt_rept.iloc[i][1] == 8):
-        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated Dozens'] != 8, other=df_ocur_rept.iloc[3][1] + 1)
+        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated'] != 8, other=df_ocur_rept.iloc[3][1] + 1)
       elif (qnt_rept.iloc[i][1] == 9):
-        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated Dozens'] != 9, other=df_ocur_rept.iloc[4][1] + 1)
+        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated'] != 9, other=df_ocur_rept.iloc[4][1] + 1)
       elif (qnt_rept.iloc[i][1] == 10):
-        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated Dozens'] != 10, other=df_ocur_rept.iloc[5][1] + 1)
+        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated'] != 10, other=df_ocur_rept.iloc[5][1] + 1)
       elif (qnt_rept.iloc[i][1] == 11):
-        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated Dozens'] != 11, other=df_ocur_rept.iloc[6][1] + 1)
+        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated'] != 11, other=df_ocur_rept.iloc[6][1] + 1)
       elif (qnt_rept.iloc[i][1] == 12):
-        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated Dozens'] != 12, other=df_ocur_rept.iloc[7][1] + 1)
+        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated'] != 12, other=df_ocur_rept.iloc[7][1] + 1)
       elif (qnt_rept.iloc[i][1] == 13):
-        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated Dozens'] != 13, other=df_ocur_rept.iloc[8][1] + 1)
+        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated'] != 13, other=df_ocur_rept.iloc[8][1] + 1)
       elif (qnt_rept.iloc[i][1] == 14):
-        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated Dozens'] != 14, other=df_ocur_rept.iloc[9][1] + 1)
+        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated'] != 14, other=df_ocur_rept.iloc[9][1] + 1)
       elif (qnt_rept.iloc[i][1] == 15):
-        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated Dozens'] != 15, other=df_ocur_rept.iloc[10][1] + 1)
+        df_ocur_rept['Occurrence'] = df_ocur_rept['Occurrence'].where(cond=df_ocur_rept['Repeated'] != 15, other=df_ocur_rept.iloc[10][1] + 1)
     # Soma as ocorrencias
     tot = 0
     for i in range(len(df_ocur_rept)):
       tot = tot + df_ocur_rept.iloc[i][1]
     # Preenchendo a percentagem do numero de ocorrencias
     for i in range(len(df_ocur_rept)):
-      df_ocur_rept['Percentage Occurrences'] = df_ocur_rept['Percentage Occurrences'].where(cond=df_ocur_rept['Repeated Dozens'] != i+5, other=(df_ocur_rept.iloc[i][1] * 100) / tot)
+      df_ocur_rept['Percentage Occurrences'] = df_ocur_rept['Percentage Occurrences'].where(cond=df_ocur_rept['Repeated'] != i+5, other=(df_ocur_rept.iloc[i][1] * 100) / tot)
   
     return df_ocur_rept
